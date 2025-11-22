@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Mapa - Ecopontos Campinas</title>
+  <link rel="icon" type="image/png" href="IMAGENS/favicon1.png">
+   <link rel="stylesheet" href="./estilo/mapa.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     #map {
@@ -12,6 +14,21 @@
   </style>
 </head>
 <body>
+
+    <header class="cabecalho">
+    <div class="logo">
+      <img src="./img/reciclanewlogo.png" alt="Logo ReciclaIF">
+    </div>
+    <nav class="nav1">
+      <a class="headermenu" href="index.html">Home</a>
+      <a class="headermenu" href="ecoponto.html">Ecoponto</a>
+      <a class="headermenu" href="sobre.html">Sobre</a>
+      <a class="headermenu" href="galeria.html">Galeria</a>
+      <a class="headermenu ativo" href="mapa.html">Mapa</a>
+      <a class="headermenu" href="contato.html">Contato</a>
+    </nav>
+  </header>
+
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -174,5 +191,21 @@
       }
     }
   </script>
+
+    <!-- Rodapé -->
+  <footer class="logoFooter">
+    <p>&copy; ReciclaIF 2025 | Todos os direitos reservados</p>
+    <nav>
+      <ul>
+        <li><a href="#">Termos de uso</a></li>
+        <li><a href="#">Política de privacidade</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>
+
+
+
 </body>
 </html>
