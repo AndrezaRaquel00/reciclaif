@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" type="text/css" href="./estilo/form.css" media="screen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sedan:ital@0;1&family=Trirong:wght@200;300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="principal">
+        <header class="cabecalho">
+            <div class="logo">
+                <img src="./img/reciclanewlogo.png" alt="logo reciclaif" width="200px" height="40px" >
+            </div>    
+        </header>
+    </section>
+    <main>
+        <div class="wrapper">
+            <form action="#" " id="formulario" method="POST" onsubmit="validar()">
+                <legend>
+                    Fale com o ReciclaIF
+                </legend>
+                <p>Dúvidas, sugestões ou críticas, utilize o formulário</p>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required>
+                        <div id="erro"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                        <div id="erro1"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="phone">Telefone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <div id="erro2"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="topic">Selecione o assunto</label>
+                        <select id="topic" name="topic" required>
+                            <option value="reciclagem-eletronicos">Reciclagem de Eletrônicos</option>
+                            <option value="metarreciclagem">Metarreciclagem</option>
+                            <option value="doaçãoC">Doação de Computadores</option>
+                            <option value="oficinas">Oficinas Técnicas</option>
+                            <option value="parcerias">Parcerias</option>
+                            <option value="informacao">Informações sobre o Projeto</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group-full">
+                    <label for="message">Mensagem</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <div id="erro3"></div>
+                </div>
+                <div class="form-groupB">
+                    <button type="button" onclick="validar()">Enviar</button>
+                </div>
+            </form>  
+    </main>
+    <footer class="logoFooter">
+        <p>&copy; ReciclaIF 2024 | Todos os direitos reservados</p>
+<nav>
+    <li><a hre="#">Termos de uso</a></li>
+    <li><a hre="#">Política de privacidade</a></li>            
+</nav>
+</footer>
+</body>
+</html>

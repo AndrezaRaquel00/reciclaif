@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa - Ecopontos Campinas</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // 🔑 Chave da API do OpenRouteService
+    const ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjNhNjU1N2M3ZGFhOTQwNjA5YjRmYWM2MDY2OTg1MDM3IiwiaCI6Im11cm11cjY0In0=";
+
+    // 🗺️ Mapa inicial (centro em Campinas até obter localização real)
+    const map = L.map("map").setView([-22.909, -47.0626], 12);
+
+    // 🌍 Camada base do mapa
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(map);
+
+    // ♻️ Lista dos Ecopontos com imagens
+    const pontosColeta = [
+      { nome: "Vila União", lat: -22.935933702574797, lng: -47.118651748486684, img: "imagens/vila uniao.jpeg" },
+      { nome: "Jardim Eulina", lat: -22.891484047413588, lng: -47.10085379081654, img: "imagens/jardim eulina.png" },
+      { nome: "Barão Geraldo", lat: -22.8163405274082, lng: -47.100312169659496, img: "imagens/barao geraldo.jpeg" },
+      { nome: "Carlos Grimaldi", lat: -22.877435515608358, lng: -47.04301226046883, img: "imagens/carlos grimaldi.jpeg" },
+      { nome: "Campos Salles", lat: -22.94674094226073, lng: -47.05507231779972, img: "imagens/campos sales.jpg" },
+      { nome: "Parque Via Norte", lat: -22.878056418409574, lng: -47.12217371534339, img: "imagens/vila boa vista.jpeg" },
+      { nome: "Jardim Marisa", lat: -23.035668406787384, lng: -47.110103699999996,  img: "imagens/jardim marisa.jpeg" },
+      { nome: "Jardim Pacaembu", lat: -22.904373089184116, lng: -47.10554580430846, img: "imagens/jardim pacaembu.jpg" },
+      { nome: "Reversis", lat: -22.919807571901362,  lng: -47.04234750470186, img: "imagens/REVERSIS.png" },
+      { nome: "Jardim São Gabriel", lat: -22.94205129560324, lng: -47.02986968896386, img:"imagens/sao gabriel.jpg" },
+      { nome: "Parque São Jorge", lat: -22.895900408492732, lng: -47.15636593314476, img: "imagens/sao jorge.png" },
+      { nome: "Vida Nova", lat: -22.97721622711615, lng: -47.17747199081383, img: "imagens/vida nova.jpeg" },
+      { nome: "Região Central", lat: -22.909024845037116, lng: -47.06841941965193, img: "imagens/centro.png" },
+      { nome: "Jardim Itajaí", lat: -22.949268595620914,  lng: -47.19154867433543, img: "imagens/itajai.jpeg" },
+      { nome: "Jardim Eulina", lat: -22.89164540363612, lng: -47.10084880901154, img: "imagens/eulina.jpeg" }
+    ];
+
+    // 📍 Adiciona os marcadores dos ecopontos no mapa
+    pontosColeta.forEach(ponto => {
+      const popupHTML = `
+        <div style="text-align:center;">
+          <img src="${ponto.img}" alt="Ecoponto ${ponto.nome}" style="width:60px;height:60px;border-radius:8px;margin-bottom:5px;"><br>
+          <b>${ponto.nome}</b><br>
+          <button onclick="calcularRota(${ponto.lat}, ${ponto.lng})">Ir até aqui</button>
+        </div>
+      `;
+      L.marker([ponto.lat, ponto.lng])
+        .addTo(map)
+        .bindPopup(popupHTML);
+    });
+
+    // 🔴 Ícone vermelho do usuário
+    const userIcon = L.icon({
+      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+      shadowUrl: "https://unpkg.com/leaflet/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    let usuarioMarker;
+    let rotaAtual;
+
+    // 📍 Localiza o usuário automaticamente
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const userLat = pos.coords.latitude;
+      const userLng = pos.coords.longitude;
+
+      usuarioMarker = L.marker([userLat, userLng], { icon: userIcon })
+        .addTo(map)
+        .bindPopup("📍 Você está aqui")
+        .openPopup();
+
+      map.setView([userLat, userLng], 14);
+
+      // 🔎 Descobrir o ponto mais próximo
+      let maisProximo = null;
+      let menorDistancia = Infinity;
+
+      for (let ponto of pontosColeta) {
+        try {
+          const response = await axios.post(
+            "https://api.openrouteservice.org/v2/directions/driving-car/json",
+            {
+              coordinates: [
+                [userLng, userLat],
+                [ponto.lng, ponto.lat]
+              ]
+            },
+            {
+              headers: {
+                Authorization: ORS_API_KEY,
+                "Content-Type": "application/json"
+              }
+            }
+          );
+
+          const rota = response.data;
+          const distancia = rota.routes[0].summary.distance / 1000;
+          const duracao = rota.routes[0].summary.duration / 60;
+
+          if (distancia < menorDistancia) {
+            menorDistancia = distancia;
+            maisProximo = { ...ponto, distancia, duracao };
+          }
+        } catch (e) {
+          console.error("Erro ao calcular distância para:", ponto.nome, e);
+        }
+      }
+
+      // 🚗 Se encontrou ponto mais próximo, traçar rota automática
+      if (maisProximo) {
+        calcularRota(maisProximo.lat, maisProximo.lng, true, maisProximo.distancia, maisProximo.duracao);
+      }
+    });
+
+    // 🚙 Função de cálculo de rota
+    async function calcularRota(destLat, destLng, auto = false, dist = null, dur = null) {
+      if (!usuarioMarker) {
+        alert("Não foi possível obter sua localização.");
+        return;
+      }
+
+      const userLat = usuarioMarker.getLatLng().lat;
+      const userLng = usuarioMarker.getLatLng().lng;
+
+      const url = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
+
+      try {
+        const response = await axios.post(
+          url,
+          {
+            coordinates: [
+              [userLng, userLat],
+              [destLng, destLat]
+            ]
+          },
+          {
+            headers: {
+              Authorization: ORS_API_KEY,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        const rota = response.data;
+
+        if (rotaAtual) map.removeLayer(rotaAtual);
+
+        rotaAtual = L.geoJSON(rota, {
+          style: { color: "blue", weight: 4 }
+        }).addTo(map);
+
+        const distancia = (auto && dist ? dist : rota.features[0].properties.segments[0].distance / 1000).toFixed(2);
+        const duracao = (auto && dur ? dur : rota.features[0].properties.segments[0].duration / 60).toFixed(0);
+
+        alert(`📍 Ponto selecionado: \nDistância: ${distancia} km\nTempo estimado: ${duracao} min`);
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao calcular rota.");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+   }
+   body {
+    font-size: 100%;
+    background-color: #FDFFD5;
+}
+.cabecalho {
+    display: block;
+    margin: 0;
+    align-items: center;
+    background-color: #B1D48C;
+    /*border-bottom: 1px solid #eb7b8f;*/
+    height: 115px;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 150px; /* Defina a altura do cabeçalho como necessário */
+}
+.nav1 a {
+    margin: 0px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    padding: 30px;
+}
+.principal {
+    justify-content: space-between;
+    height: auto;
+}
+
+
+.logo img {
+    height: 50px;
+    width: auto;
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25)); /* sombra leve */
+}
+p{
+  font-family: "Poppins", sans-serif;
+}
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  #formulario {
+    width: 400px;
+    background-color: rgba(46, 118, 2, 0.13);
+    border-radius: 10px;
+    padding: 30px 30px;
+    min-height: 300px;
+    margin-top: 6%;
+  }
+  #formulario legend {
+    color: #240115;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    margin: 5px 0;
+  }
+  .form-group {
+    margin: 20px 0;
+
+  }
+  .form-group label {
+    display: block;
+    font-size: 15px;
+    color: #393939;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+  }
+  .form-group-full {
+    display: block;
+    font-size: 15px;
+    color: #393939;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+  }
+  textarea {
+    background: #dedddd;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: block;
+    width: 100%;
+  }
+  .form-group select{
+    background: #dedddd;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: block;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+  }
+  .form-group input:not([type="checkbox"]) {
+    background: #dedddd;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: block;
+    width: 100%;
+  }
+button  {
+    width: 340px;
+    height: 35px;
+    background-color: #B1D48C;
+    font-family: "Poppins", sans-serif;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 0%;
+    font-size: 15px;
+    margin-top: 2%;
+}
+button:hover {
+    background-color: #97c673;
+    cursor: pointer;
+    }
+
+.logoFooter {
+    padding: 20px;
+    text-align: center;
+    margin-top: 80px;
+    list-style: none;
+    margin-top: 100px;
+    background-color: #B1D48C;
+    color: white;
+    font-family: "Poppins", sans-serif;
+
+}

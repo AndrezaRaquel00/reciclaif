@@ -1,0 +1,208 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #FDFFD5;
+  color: #1E3706;
+  line-height: 1.6;
+}
+
+/* Cabeçalho — igual HOME/SOBRE */
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #B1D48C;
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.25));
+}
+
+.nav1 a {
+  margin-left: 20px;
+  font-weight: 600;
+  color: #1E3706;
+  transition: color 0.3s ease;
+}
+
+.nav1 a:hover,
+.nav1 .ativo {
+  color: #fff;
+}
+
+/* Estrutura padrão igual ao SOBRE */
+.conteudo {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Título da página */
+.titulo h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+/* ------ FAIXAS estilo SOBRE ------ */
+.bloco {
+  padding: 55px 25px;
+  border-radius: 0; /* segue padrão do SOBRE (sem cards arredondados grandes) */
+}
+
+.bg-claro {
+  background: #ffffff;
+}
+
+.bg-verde {
+  background: #B1D48C;
+  color: #fff;
+}
+
+.destaque {
+  background: #f5f7e0;
+}
+
+/* ------ TÍTULOS ------ */
+.bloco h2 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #1E3706;
+}
+
+.bg-verde h2 {
+  color: #fff;
+}
+
+/* ------ TEXTO ------ */
+.bloco p {
+  font-size: 1rem;
+  max-width: 900px;
+  margin: 0 auto 18px auto;
+  line-height: 1.55;
+}
+
+/* ------ IMAGEM CENTRAL ------ */
+.imagem-centro {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.imagem-centro img {
+  width: 70%;
+  max-width: 600px;
+  border-radius: 12px;
+}
+
+.fonte {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #444;
+}
+
+/* ------ CARDS (seguindo SOBRE, não HOME) ------ */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.card {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  color: #1E3706;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.card p {
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* ------ LISTAS ------ */
+ol, ul {
+  max-width: 800px;
+  margin: 15px auto;
+  padding-left: 25px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+/* ------ BLOCO IFSP ECO ------ */
+.ecoifsp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.ecoifsp img {
+  max-width: 420px;
+  border-radius: 12px;
+}
+
+.oecoponto {
+  max-width: 500px;
+}
+
+/* ------ RODAPÉ ------ */
+.logoFooter {
+  background-color: #B1D48C;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+.logoFooter ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logoFooter a {
+  color: #fff;
+}
+
+.logoFooter a:hover {
+  text-decoration: underline;
+}
+
+/* ------ RESPONSIVIDADE ------ */
+@media (max-width: 850px) {
+  .ecoifsp {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .imagem-centro img {
+    width: 90%;
+  }
+}
+
+
